@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class bulletController : MonoBehaviour
 {
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
+    private Vector3 moveDirection;
+
     public float velX;
     public float velY;
-    Vector3 moveDirection;
     public int player;
     public int bullet;
 
@@ -21,15 +22,12 @@ public class bulletController : MonoBehaviour
         moveDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
         moveDirection.z = 0;
         moveDirection.Normalize();
-
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        
-        if (col.gameObject.tag != "Player" && col.gameObject.tag !="Bullet") Destroy(gameObject);
+        if (col.gameObject.tag != "player" && col.gameObject.tag !="bullet") Destroy(gameObject);
         Physics2D.IgnoreLayerCollision(player, bullet, true);
-
     }
 
     // Update is called once per frame
