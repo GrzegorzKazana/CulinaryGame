@@ -15,7 +15,7 @@ namespace Assets.TestArea.Scripts
 
         private DateTime? _timeWhenWasLastDodge;
         private readonly double _maxQuantityOfSecondsBetweenDodges = 5;
-        public double TotalMilisecondsToWaitForAnotherDodge;
+        public double TotalMilisecondsToWaitForAnotherDodge { get; set; }
 
         // Start is called before the first frame update
         void Start()
@@ -25,12 +25,12 @@ namespace Assets.TestArea.Scripts
 
         void Update()
         {
-            if (Input.GetKey(KeyCode.Space) && TotalMilisecondsToWaitForAnotherDodge <= 0)
+            if (Input.GetKeyDown(KeyCode.Space) && TotalMilisecondsToWaitForAnotherDodge <= 0)
             {
                 _isRolling = true;
             }
 
-            if (Input.GetButton("Fire1"))
+            if (Input.GetButtonDown("Fire1"))
             {
 
                 _isShooting = true;
