@@ -1,15 +1,21 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
+
 public class SetVolume : MonoBehaviour
 {
-    public AudioMixer _audioMixer;
+    private string _sliderMusicVolume = "MusicVolume";
+    
+    void Awake()
+    {
+        var slider = GameObject.FindGameObjectWithTag(AudioSourceController.MusicVolumeSliderKey).GetComponent<UnityEngine.UI.Slider>();
+        slider.value = PlayerPrefs.GetFloat(AudioSourceController.MusicVolumeSliderKey);
+
+        AudioSourceController.AudioMixer.SetFloat(_sliderMusicVolume, Mathf.Log10(slider.value) * 20);
+    }
 
     public void SetLevel(float sliderValue)
     {
-        Console.WriteLine("asd");
-        _audioMixer.SetFloat("MusicVolume", Mathf.Log10(sliderValue)*20);
+        AudioSourceController.AudioMixer.SetFloat(_sliderMusicVolume, Mathf.Log10(sliderValue)*20);
+        PlayerPrefs.SetFloat(AudioSourceController.MusicVolumeSliderKey, sliderValue);
     }
 }
