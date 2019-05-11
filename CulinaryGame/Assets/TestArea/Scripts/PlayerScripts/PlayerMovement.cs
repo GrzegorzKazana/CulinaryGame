@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.TestArea.Scripts
+namespace Assets.TestArea.Scripts.PlayerScripts
 {
     public class PlayerMovement : MonoBehaviour
     {
@@ -42,7 +42,21 @@ namespace Assets.TestArea.Scripts
             }
 
         }
-        
+
+        // Update is called once per frame
+        void FixedUpdate()
+        {
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
+
+            Vector2 movement = new Vector2(horizontal, vertical);
+
+            handleMovement(movement * Speed);
+
+            if (_isRolling) DodgeRoll(movement * Speed);
+            if (_isShooting) ShootBullet(movement * Speed);
+        }
+
         void DodgeRoll(Vector2 movement)
         {
             
@@ -74,21 +88,6 @@ namespace Assets.TestArea.Scripts
                 Instantiate(bullet, transform.position, Quaternion.Euler(new Vector2(0, 1))) as Rigidbody2D;
             _isShooting = false;
  
-        }
-
-
-        // Update is called once per frame
-        void FixedUpdate()
-        {
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-
-            Vector2 movement = new Vector2(horizontal, vertical);
-
-            handleMovement(movement*Speed);
-
-            if(_isRolling) DodgeRoll(movement*Speed);
-            if (_isShooting) ShootBullet(movement * Speed);
         }
     }
 }
